@@ -15,12 +15,12 @@ use Illuminate\Http\Request;
 
   Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
           Route::post('users', 'API\UserController@store');
-
+          Route::post('users/auth/login', 'API\UserController@login');
           // Route::middleware('auth')->get('/user', function (Request $request) {
           //     return $request->user();
           // });
 
-          Route::get('/test', function (Request $request) {
+          Route::middleware('auth')->get('/test', function (Request $request) {
             return response(['message' => 'welcome']);
           });
   });
