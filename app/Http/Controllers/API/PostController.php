@@ -31,7 +31,7 @@ class PostController extends Controller
        return response()->json([
          'error' => false,
          'message' => 'Post created successfully',
-         'post' => $post,
+         'post' => $createdPost,
        ], 201);
       }
 
@@ -40,5 +40,46 @@ class PostController extends Controller
         'message' => 'Could not create post. Make sure your request is correctly formed',
         'post' => null,
       ], 422);
+    }
+
+    /**
+     * Update a post
+     * 
+     * @param \Illuminate\Http\Request $request
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    function update(Request $request, $id) {
+      $request->validate([
+        'title' => 'required|max:250',
+        'body' => 'required'
+      ]);
+
+      $post = Post::find($id);
+
+      if (!$post) {
+        return response()->json([
+          'error' => true,
+          'message' => 'Post with id '.$id.' does not exist',
+          'post' => $request->all(),
+        ]);
+      }
+
+      $post['title'] = $request->get('title');
+      $post['body'] = $request->get('body');
+
+      if ($post->save()) {
+        return response()->json([
+          'error' => false,
+          'message' => 'Post updated successfully',
+          'post' => $post,
+        ]);
+      }
+
+      return response()->json([
+        'error' => true,
+        'message' => 'Something went wrong while trying to update the post',
+        'post' => $post
+      ], 500);
     }
 }

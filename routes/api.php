@@ -21,4 +21,5 @@ use Illuminate\Http\Request;
           // });
 
           Route::middleware('auth:api')->post('posts', 'API\PostController@create');
+          Route::middleware('auth:api')->put('posts/{id}', 'API\PostController@update');
   });
