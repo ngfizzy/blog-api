@@ -20,7 +20,5 @@ use Illuminate\Http\Request;
           //     return $request->user();
           // });
 
-          Route::middleware('auth')->get('/test', function (Request $request) {
-            return response(['message' => 'welcome']);
-          });
+          Route::middleware('auth:api')->post('posts', 'API\PostController@create');
   });
