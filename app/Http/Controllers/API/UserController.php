@@ -68,7 +68,7 @@ class UserController extends Controller
 
       if (Auth::attempt($request->only(['email', 'password']))) {
           $user = Auth::user();
-          $token = $user->createToken('ngfizzy_blog', ['*'])->token;
+          $token = $user->createToken('ngfizzy_blog', ['*'])->accessToken;
 
           return response()->json([
             'success' => true,
