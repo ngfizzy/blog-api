@@ -82,4 +82,31 @@ class PostController extends Controller
         'post' => $post
       ], 500);
     }
+
+    /**
+     * Delete a post
+     * 
+     * @param int $id
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    function delete($id) {
+      $post = Post::find($id);
+
+      if (!$post) {
+        return response()->json([
+          'error' => true,
+          'message' => 'Delete failed! Post with id '.$id.' was not found.',
+          'postId' => $id,
+        ], 404);
+      }
+
+      $post->delete();
+
+      return response()->json([
+        'error' => false,
+        'message' => 'Deleted',
+        'postId' => $id,
+      ]);
+    }
 }
