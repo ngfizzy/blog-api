@@ -23,8 +23,25 @@ class PostController extends Controller
       'posts'   => $posts,
     ]);
   }
-    
-  
+
+  function view($id) {
+    $post = Post::find($id);
+
+    if ($post) {
+      return response()->json([
+        'error' => false,
+        'message' => 'Found your post',
+        'post' => $post
+      ]);
+    }
+
+    return response()->json([
+      'error' => true,
+      'message' => 'There is no post with id '.$id,
+      'post' => null,
+    ]);
+  }
+
   /**
    * Create a Post
    *
