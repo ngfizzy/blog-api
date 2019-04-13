@@ -117,7 +117,7 @@ class PostController extends Controller
   }
 
   /**
-   * Delete a post
+   * Permanently Delete A Post
    * 
    * @param int $id
    * 
@@ -134,11 +134,38 @@ class PostController extends Controller
       ], 404);
     }
 
-    $post->delete();
+    $post->forceDelete();
 
     return response()->json([
       'error' => false,
       'message' => 'deleted',
+      'postId' => $id,
+    ]);
+  }
+
+  /**
+   * Soft delete a post
+   * 
+   * @param int $id Post's unique Identifier
+   * 
+   * @return \Illuminate\Http\Response
+   */
+  function trash($id) {
+    $post = Post::find($id);
+
+    if ($post) {
+      $post->delete();
+
+      return response()->json([
+        'error' => false,
+        'message' => 'Post deleted successfully',
+        'postId' => $id,
+      ]);
+    }
+
+    return response()->json([
+      'error' => false,
+      'message' => 'Delete failed! Post with id of '.$id.' was not found',
       'postId' => $id,
     ]);
   }
