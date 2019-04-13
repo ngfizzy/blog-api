@@ -19,4 +19,5 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
   Route::middleware('auth:api')->post('posts', 'API\PostController@create');
   Route::middleware('auth:api')->put('posts/{id}', 'API\PostController@update');
   Route::middleware('auth:api')->delete('posts/{id}', 'API\PostController@delete');
+  Route::get('posts', 'API\PostController@index');
 });
