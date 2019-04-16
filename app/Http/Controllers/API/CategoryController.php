@@ -25,8 +25,27 @@ class CategoryController extends Controller
      return response()->json([
        'error' => false,
        'message' => 'All created categories',
-       'categories' => $categories
+       'categories' => $categories,
      ]);
+  }
+
+  function view($id) {
+
+    $category = $this->category->find($id);
+
+    if ($category) {
+      return response()->json([
+        'error' => false,
+        'message' => 'Found category',
+        'category' => $category,
+      ]);
+    }
+
+    return response()->json([
+      'error' => true,
+      'message' => 'Category not found',
+      'categoryId' => $id
+    ], 404);
   }
 
   /**
