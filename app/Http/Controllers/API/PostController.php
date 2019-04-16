@@ -169,4 +169,31 @@ class PostController extends Controller
       'postId' => $id,
     ]);
   }
+
+  /**
+   * Restore soft deleted post
+   * 
+   * @param int $id,
+   * 
+   * @return \Illuminate\Http\Response
+   */
+  function restore($id) {
+    $post = Post::onlyTrashed()->find($id);
+
+    if ($post) {
+      $post->restore();
+
+      return response()->json([
+        'error' => false,
+        'message' => 'restored',
+        'post' => $post,
+      ]);
+    }
+
+    return response()->json([
+      'error' => true,
+      'message' => 'Post not found in trash',
+      'postId' => 'id',
+    ], 404);
+  }
 }
