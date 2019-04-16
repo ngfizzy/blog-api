@@ -14,6 +14,28 @@ class CategoryController extends Controller
     $this->category = $category;
   }
 
+  /**
+   * Get all categories
+   *
+   * @return \Illuminate\Http\Response
+   */
+  function index() {
+     $categories = $this->category->all();
+
+     return response()->json([
+       'error' => false,
+       'message' => 'All created categories',
+       'categories' => $categories
+     ]);
+  }
+
+  /**
+   * Create a category
+   *
+   * @param \Illuminate\Http\Request $request
+   *
+   * @return \Illuminate\Http\Response
+   */
   function create(Request $request) {
     $request->validate([
       'name' => 'required|max:50|unique:categories'

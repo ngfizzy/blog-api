@@ -25,5 +25,6 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
   Route::middleware('auth:api')->delete('posts/trash/{id}', 'API\PostController@trash');
   Route::middleware('auth:api')->patch('posts/trash/{id}', 'API\PostController@restore');
 
+  Route::get('categories', 'API\CategoryController@index');
   Route::middleware('auth:api')->post('categories', 'API\CategoryController@create');
 });
