@@ -39,7 +39,7 @@ class PostController extends Controller
       'error' => true,
       'message' => 'There is no post with id '.$id,
       'post' => null,
-    ]);
+    ], 404);
   }
 
   /**
