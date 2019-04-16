@@ -29,6 +29,13 @@ class CategoryController extends Controller
      ]);
   }
 
+  /**
+   * Get category by Id
+   *
+   * @param int $id Category Id
+   *
+   * @return \Illumintate\Http\Request
+   */
   function view($id) {
 
     $category = $this->category->find($id);
@@ -67,5 +74,42 @@ class CategoryController extends Controller
       'message' => 'Category created successfully',
       'category' => $category
     ], 201);
+  }
+
+  /**
+   * Update Category
+   * 
+   * @param \Illuminate\Http\Request
+   * @param int $id
+   * 
+   * @return \Illuminate\Http\Response
+   */
+  function update(Request $request, $id) {
+    $request->validate([
+      'name' => 'required|max:50|unique:categories'
+    ]);
+
+    $category = $this->category->find($id);
+
+    if ($category) {
+      $category['name'] = $request->get('name');
+      
+      $category->save();
+
+      return response()->json([
+        'error' => false,
+        'message' => 'Category name updated',
+        'category' => $category,
+      ]);
+    }
+
+    return response()->json([
+      'error' => true,
+      'message' => 'Could not find category',
+      'category' => [
+        'name' => $request->get('name'),
+        'id' => $id,
+      ],
+    ]);
   }
 }

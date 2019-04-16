@@ -172,9 +172,9 @@ class PostController extends Controller
 
   /**
    * Restore soft deleted post
-   * 
+   *
    * @param int $id,
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function restore($id) {

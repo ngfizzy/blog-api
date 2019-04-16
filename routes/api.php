@@ -18,7 +18,6 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
 
   Route::get('posts', 'API\PostController@index');
   Route::get('posts/{id}', 'API\PostController@view');
-
   Route::middleware('auth:api')->post('posts', 'API\PostController@create');
   Route::middleware('auth:api')->put('posts/{id}', 'API\PostController@update');
   Route::middleware('auth:api')->delete('posts/{id}', 'API\PostController@delete');
@@ -27,6 +26,6 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
 
   Route::get('categories', 'API\CategoryController@index');
   Route::get('categories/{id}', 'API\CategoryController@view');
-
   Route::middleware('auth:api')->post('categories', 'API\CategoryController@create');
+  Route::middleware('auth:api')->put('categories/{id}', 'API\CategoryController@update');
 });
