@@ -33,10 +33,6 @@ class PostCategoryController extends Controller
 
     $postId = $request->get('postId');
     $categoryId = $request->get('categoryId');
-    $postCategory = [
-      'postId' => $postId,
-      'categoryId' => $categoryId,
-    ];
 
     $postCategory = DB::table('posts_categories')
       ->where('post_id', $postId)
@@ -57,6 +53,43 @@ class PostCategoryController extends Controller
     return response()->json([
       'error' => false,
       'message' => 'Post added to category successfully',
+      'postCategory' =>  [
+        'postId' => $postId,
+        'categoryId' => $categoryId,
+      ],
+    ]);
+  }
+
+  /**
+   * Remove post from category
+   *
+   * @param int $postId
+   * @param int $categoryId
+   *
+   * @return \Illumate\Http\Response
+   */
+  function remove($postId, $categoryId) {
+    $postCategory = DB::table('posts_categories')
+    ->where('post_id', $postId)
+    ->where('category_id', $categoryId)
+    ->first();
+
+    if (!$postCategory) {
+
+      return response()->json([
+        'error' => true,
+        'message' => 'Post is not in specified category',
+        'postCategory' => $postCategory,
+      ]);
+    }
+
+    $this->post->find($postId)
+      ->categories()
+      ->detach($categoryId);
+
+    return response()->json([
+      'error' => false,
+      'message' => 'post removed from category',
       'postCategory' => $postCategory,
     ]);
   }
