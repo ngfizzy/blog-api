@@ -16,12 +16,14 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
   Route::post('users', 'API\UserController@store');
   Route::post('users/auth/login', 'API\UserController@login');
 
+  Route::get('posts', 'API\PostController@index');
+  Route::get('posts/{id}', 'API\PostController@view');
+
   Route::middleware('auth:api')->post('posts', 'API\PostController@create');
   Route::middleware('auth:api')->put('posts/{id}', 'API\PostController@update');
   Route::middleware('auth:api')->delete('posts/{id}', 'API\PostController@delete');
   Route::middleware('auth:api')->delete('posts/trash/{id}', 'API\PostController@trash');
   Route::middleware('auth:api')->patch('posts/trash/{id}', 'API\PostController@restore');
 
-  Route::get('posts', 'API\PostController@index');
-  Route::get('posts/{id}', 'API\PostController@view');
+  Route::middleware('auth:api')->post('categories', 'API\CategoryController@create');
 });
