@@ -28,4 +28,6 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
   Route::get('categories/{id}', 'API\CategoryController@view');
   Route::middleware('auth:api')->post('categories', 'API\CategoryController@create');
   Route::middleware('auth:api')->put('categories/{id}', 'API\CategoryController@update');
+
+  Route::middleware('auth:api')->post('posts/categories/', 'API\PostCategoryController@create');
 });
