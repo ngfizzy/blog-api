@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use SoftDeletes;
-    //createdPost
     protected $fillable = ['title', 'body', 'author_id',];
 
     public function users() {
@@ -17,5 +16,9 @@ class Post extends Model
 
     public function categories() {
       return $this->belongsToMany('App\Category', 'posts_categories');
+    }
+
+    public function tags() {
+      return $this->belongsToMany('App\Tag', 'posts_tags');
     }
 }
