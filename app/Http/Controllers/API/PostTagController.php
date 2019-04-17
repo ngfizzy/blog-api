@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 use App\Tag;
@@ -75,5 +76,43 @@ class PostTagController extends Controller
       $response['taggedPost'] = $post->tags;
 
       return response()->json($response, 201);
+    }
+
+    /**
+     * Remove  Tag From a post
+     *
+     * @param int $postId
+     * @param int $tagId
+     *
+     * @return \Illuminate\Http\Response Response
+     */
+    function remove($postId, $tagId) {
+      $response = [
+        'error' => true,
+        'message' => 'Something went wrong',
+        'postTag' => [
+          'postId' => $postId,
+          'tagId' => $tagId,
+        ],
+      ];
+
+      $postTag = DB::table('posts_tags')->where('post_id', $postId)
+        ->where('tag_id', $tagId)
+        ->first();
+
+      if (!$postTag) {
+        $response['message'] = 'No matching record to remove';
+
+        return response()->json($response, 404);
+      }
+
+      $post = $this->post->find($postId);
+      $post->tags()->detach($tagId);
+
+      $response['error'] = false;
+      $response['message'] = 'Tag removed successfully';
+      $response['tags'] = $post->tags;
+
+      return response()->json($response);
     }
 }
