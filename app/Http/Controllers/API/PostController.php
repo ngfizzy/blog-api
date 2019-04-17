@@ -5,9 +5,15 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 
 class PostController extends Controller
 {
+  protected $post;
+
+  function __construct(Post $post, Tag $tag) {
+    $this->post = $post;
+  }
 
   /**
    * @param \Illuminate\Http\Request
