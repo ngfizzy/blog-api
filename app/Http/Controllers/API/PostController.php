@@ -20,12 +20,23 @@ class PostController extends Controller
    * 
    * @return \Illuminate\Http\Response
    */
-  function index() {
-    $posts = $this->post->with('tags')->get();
+  function index(Request $request) {
+    $searchTerm = $request->query('q');
+
+    if($searchTerm) {
+      $posts = $this->post
+        ->with('tags')
+        ->where('title', 'LIKE', '%'.$searchTerm.'%')
+        ->get();
+      $message = 'All posts with titles that match your query';
+    } else {
+      $posts = $this->post->with('tags')->get();
+      $message = 'All posts';
+    }
 
     return response()->json([
       'error' => false,
-      'message' => 'all posts',
+      'message' => 'All posts',
       'posts'   => $posts,
     ]);
   }
