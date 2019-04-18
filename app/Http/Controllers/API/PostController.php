@@ -21,7 +21,7 @@ class PostController extends Controller
    * @return \Illuminate\Http\Response
    */
   function index() {
-    $posts = Post::all();
+    $posts = $this->post->with('tags')->get();
 
     return response()->json([
       'error' => false,
@@ -31,7 +31,7 @@ class PostController extends Controller
   }
 
   function view($id) {
-    $post = Post::find($id);
+    $post = $this->post->with('tags')->find($id);
 
     if ($post) {
       return response()->json([
