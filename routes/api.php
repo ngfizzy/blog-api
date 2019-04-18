@@ -29,6 +29,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
   Route::middleware('auth:api')->post('categories', 'API\CategoryController@create');
   Route::middleware('auth:api')->put('categories/{id}', 'API\CategoryController@update');
 
+  Route::get('posts/categories/{categoryId}', 'API\PostCategoryController@viewCategoryPosts');
   Route::middleware('auth:api')->post('posts/categories/', 'API\PostCategoryController@create');
   Route::middleware('auth:api')->delete(
     'posts/{postId}/categories/{categoryId}',
