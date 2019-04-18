@@ -34,6 +34,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
     'posts/{postId}/categories/{categoryId}',
     'API\PostCategoryController@remove');
 
+  Route::get('tags/{tagId}/posts', 'API\PostTagController@viewTagPosts');
   Route::middleware('auth:api')->post('posts/tags', 'API\PostTagController@create');
   Route::middleware('auth:api')->delete(
     'posts/{postId}/tags/{tagId}',

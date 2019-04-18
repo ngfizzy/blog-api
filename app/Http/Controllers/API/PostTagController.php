@@ -115,4 +115,17 @@ class PostTagController extends Controller
 
       return response()->json($response);
     }
+
+    function viewTagPosts($tagId) {
+      $tagPosts = $this->tag->with('posts')->find($tagId);
+      $tagPosts = $tagPosts ? $tagPosts : [];
+
+      $message = sizeof($tagPosts['posts']) ? 'Found some related posts' : 'Did not find a related post';
+
+      return response()->json([
+        'error' => false,
+        'message' => $message,
+        'tagPosts' => $tagPosts,
+      ]);
+    }
 }
