@@ -17,6 +17,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
   Route::post('users/auth/login', 'API\UserController@login');
 
   Route::get('posts', 'API\PostController@index');
+  Route::middleware('auth:api')->get('posts/trashed', 'API\PostController@showTrashed');
   Route::get('posts/{id}', 'API\PostController@view');
   Route::middleware('auth:api')->post('posts', 'API\PostController@create');
   Route::middleware('auth:api')->put('posts/{id}', 'API\PostController@update');

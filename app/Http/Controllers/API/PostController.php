@@ -204,4 +204,21 @@ class PostController extends Controller
       'postId' => 'id',
     ], 404);
   }
+
+  /**
+   * Get only trashed posts
+   *
+   * @return \Illuminate\Http\Response
+   */
+  function showTrashed() {
+    $trashedPosts = $this->post->onlyTrashed()->get();
+
+    $message = $trashedPosts ? 'There are posts in your trash' : 'There are no posts in your trash';
+
+    return response()->json([
+      'error' => true,
+      'message' => $message,
+      'posts' => $trashedPosts,
+    ]);
+  }
 }
