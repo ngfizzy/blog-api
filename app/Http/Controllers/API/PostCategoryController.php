@@ -113,6 +113,5 @@ class PostCategoryController extends Controller
       'message' => $message,
       'tagPosts' => $categoryPosts,
     ]);
-
   }
 }
