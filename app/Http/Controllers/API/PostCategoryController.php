@@ -93,4 +93,26 @@ class PostCategoryController extends Controller
       'postCategory' => $postCategory,
     ]);
   }
+
+  /**
+   * Get post belonging to a category
+   *
+   * @param int $categoryId 
+   *
+   * @return \Illuminate\Http\Request
+   */
+  function viewCategoryPosts($categoryId) {
+    $categoryPosts = $this->category->with('posts')->find($categoryId);
+    $categoryPosts = $categoryPosts ? $categoryPosts : [];
+
+    $message = !empty($categoryPosts) && sizeof($categoryPosts['posts']) ?
+      'Found some related posts' : 'Did not find a related post';
+
+    return response()->json([
+      'error' => false,
+      'message' => $message,
+      'tagPosts' => $categoryPosts,
+    ]);
+
+  }
 }
