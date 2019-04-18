@@ -140,6 +140,8 @@ class PostController extends Controller
       ], 404);
     }
 
+    $post->categories()->detach();
+    $post->tags()->detach();
     $post->forceDelete();
 
     return response()->json([
