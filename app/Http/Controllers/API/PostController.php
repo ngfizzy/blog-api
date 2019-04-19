@@ -60,6 +60,32 @@ class PostController extends Controller
   }
 
   /**
+   * Posts pagination
+   *
+   * @param \Illuminate\Http\Request $request
+   *
+   * @return \Illiuminate\Http\Response
+   */
+  function paginate(Request $request) {
+    $queryString = $request->query('page');
+
+    if (!$queryString || !is_numeric($queryString)) {
+      return response()->json([
+        'error' => true,
+        'message' => 'You must provide a query string \'page\' for this route',
+      ], 422);
+    }
+
+    $page = $this->post->paginate(20);
+
+    return response()->json([
+      'error' => false,
+      'message' => 'Page data',
+      'page' => $page,
+    ]);
+  }
+
+  /**
    * Create a Post
    *
    * @param  \Illuminate\Http\Request  $request
