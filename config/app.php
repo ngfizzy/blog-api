@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'FizzyBlog'),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +161,11 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
+        /**
+         * Passport Provider
+         */
+        Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Package Service Providers...
