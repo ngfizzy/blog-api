@@ -30,7 +30,6 @@ class PostCategoryController extends Controller
       'categoryId' => 'required|exists:categories,id',
     ]);
 
-
     $postId = $request->get('postId');
     $categoryId = $request->get('categoryId');
 
@@ -38,7 +37,7 @@ class PostCategoryController extends Controller
       ->where('post_id', $postId)
       ->where('category_id', $categoryId)
       ->first();
-    
+
     if ($postCategory) {
       return response()->json([
         'error' => true,
@@ -111,7 +110,7 @@ class PostCategoryController extends Controller
     return response()->json([
       'error' => false,
       'message' => $message,
-      'tagPosts' => $categoryPosts,
+      'categoryPosts' => $categoryPosts,
     ]);
   }
 }
