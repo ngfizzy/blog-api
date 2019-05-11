@@ -161,9 +161,9 @@ class PostController extends Controller
 
   /**
    * Permanently Delete A Post
-   * 
+   *
    * @param int $id
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function delete($id) {
