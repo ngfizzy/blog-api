@@ -17,7 +17,7 @@ class PostController extends Controller
 
   /**
    * @param \Illuminate\Http\Request
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function index(Request $request) {
@@ -26,11 +26,15 @@ class PostController extends Controller
     if($searchTerm) {
       $posts = $this->post
         ->with('tags')
+        ->with('categories')
         ->where('title', 'LIKE', '%'.$searchTerm.'%')
         ->get();
       $message = 'All posts with titles that match your query';
     } else {
-      $posts = $this->post->with('tags')->get();
+      $posts = $this->post
+      ->with('tags')
+      ->with('categories')
+      ->get();
       $message = 'All posts';
     }
 
@@ -42,7 +46,10 @@ class PostController extends Controller
   }
 
   function view($id) {
-    $post = $this->post->with('tags')->find($id);
+    $post = $this->post
+        ->with('tags')
+        ->with('categories')
+        ->find($id);
 
     if ($post) {
       return response()->json([
@@ -89,7 +96,7 @@ class PostController extends Controller
    * Create a Post
    *
    * @param  \Illuminate\Http\Request  $request
-   * 
+   *
    * @return \Illuminate\Http\Response
    **/
   function create(Request $request) {
@@ -120,9 +127,9 @@ class PostController extends Controller
 
   /**
    * Update a post
-   * 
+   *
    * @param \Illuminate\Http\Request $request
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function update(Request $request, $id) {
@@ -190,9 +197,9 @@ class PostController extends Controller
 
   /**
    * Soft delete a post
-   * 
+   *
    * @param int $id Post's unique Identifier
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function trash($id) {
