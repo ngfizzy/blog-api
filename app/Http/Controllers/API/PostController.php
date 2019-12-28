@@ -17,7 +17,7 @@ class PostController extends Controller
 
   /**
    * @param \Illuminate\Http\Request
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function index(Request $request) {
@@ -89,7 +89,7 @@ class PostController extends Controller
    * Create a Post
    *
    * @param  \Illuminate\Http\Request  $request
-   * 
+   *
    * @return \Illuminate\Http\Response
    **/
   function create(Request $request) {
@@ -120,9 +120,9 @@ class PostController extends Controller
 
   /**
    * Update a post
-   * 
+   *
    * @param \Illuminate\Http\Request $request
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function update(Request $request, $id) {
@@ -161,9 +161,9 @@ class PostController extends Controller
 
   /**
    * Permanently Delete A Post
-   * 
+   *
    * @param int $id
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function delete($id) {
@@ -190,9 +190,9 @@ class PostController extends Controller
 
   /**
    * Soft delete a post
-   * 
+   *
    * @param int $id Post's unique Identifier
-   * 
+   *
    * @return \Illuminate\Http\Response
    */
   function trash($id) {
@@ -211,6 +211,63 @@ class PostController extends Controller
     return response()->json([
       'error' => false,
       'message' => 'Delete failed! Post with id of '.$id.' was not found',
+      'postId' => $id,
+    ]);
+  }
+
+
+  /**
+   * Mark a post as published
+   *
+   * @param int $id
+   *
+   * @return \Illuminate\Http\Response
+   */
+  function publish($id) {
+    $post =Post::find($id);
+
+    if ($post) {
+      $post->published = 1;
+      $post->save();
+
+      return response()->json([
+        'error' => false,
+        'message' => 'Post Published Successfully',
+        'postId' => $id
+      ]);
+    }
+
+    return response()->json([
+      'error' => true,
+      'message' => 'Post not found',
+      'postId' => $id,
+    ]);
+  }
+
+  /**
+   * Unpublish a post
+   *
+   * @param int $id
+   *
+   * @return \Illuminate\Http\Response
+   */
+  function unpublish($id) {
+    $post = Post::find($id);
+
+    if ($post) {
+      $post->published = 0;
+      $post->save();
+
+      return response()->json([
+        'error' => false,
+        'message' => 'Post unpublished successfully',
+        'postId' => $id
+      ]);
+    }
+
+    return response()->json([
+      'error' => true,
+      'message' => 'Post not found',
       'postId' => $id,
     ]);
   }

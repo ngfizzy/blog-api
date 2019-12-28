@@ -22,6 +22,8 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function() {
   Route::get('posts/{id}', 'API\PostController@view');
   Route::middleware('auth:api')->post('posts', 'API\PostController@create');
   Route::middleware('auth:api')->put('posts/{id}', 'API\PostController@update');
+  Route::middleware('auth:api')->patch('posts/{id}/publish', 'API\PostController@publish');
+  Route::middleware('auth:api')->patch('posts/{id}/unpublish', 'API\PostController@unpublish');
   Route::middleware('auth:api')->delete('posts/{id}', 'API\PostController@delete');
   Route::middleware('auth:api')->delete('posts/trash/{id}', 'API\PostController@trash');
   Route::middleware('auth:api')->patch('posts/trash/{id}', 'API\PostController@restore');

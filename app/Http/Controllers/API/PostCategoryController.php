@@ -19,7 +19,7 @@ class PostCategoryController extends Controller
 
   /**
    * Add a post to a category
-   * 
+   *
    * @param \Illuminate\Http\Request $request
    *
    * @return \Illuminate\Http\Response
@@ -38,7 +38,7 @@ class PostCategoryController extends Controller
       ->where('post_id', $postId)
       ->where('category_id', $categoryId)
       ->first();
-    
+
     if ($postCategory) {
       return response()->json([
         'error' => true,
@@ -97,7 +97,7 @@ class PostCategoryController extends Controller
   /**
    * Get post belonging to a category
    *
-   * @param int $categoryId 
+   * @param int $categoryId
    *
    * @return \Illuminate\Http\Request
    */
