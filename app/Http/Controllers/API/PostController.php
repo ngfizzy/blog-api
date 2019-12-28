@@ -26,11 +26,15 @@ class PostController extends Controller
     if($searchTerm) {
       $posts = $this->post
         ->with('tags')
+        ->with('categories')
         ->where('title', 'LIKE', '%'.$searchTerm.'%')
         ->get();
       $message = 'All posts with titles that match your query';
     } else {
-      $posts = $this->post->with('tags')->get();
+      $posts = $this->post
+      ->with('tags')
+      ->with('categories')
+      ->get();
       $message = 'All posts';
     }
 
@@ -42,7 +46,10 @@ class PostController extends Controller
   }
 
   function view($id) {
-    $post = $this->post->with('tags')->find($id);
+    $post = $this->post
+        ->with('tags')
+        ->with('categories')
+        ->find($id);
 
     if ($post) {
       return response()->json([
